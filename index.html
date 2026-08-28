@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>مدرسه‌یار هوشمند</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Tahoma,Arial,sans-serif;
+    background:#f4f7fb;
+    color:#172033;
+}
+
+header{
+    background:linear-gradient(135deg,#315bea,#6846d9);
+    color:white;
+    padding:22px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    font-size:28px;
+}
+
+header p{
+    margin:8px 0 0;
+    opacity:.9;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.roles{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:25px;
+}
+
+.role{
+    background:white;
+    border:0;
+    border-radius:18px;
+    padding:20px 10px;
+    cursor:pointer;
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+    font-size:16px;
+    transition:.2s;
+}
+
+.role:hover{
+    transform:translateY(-3px);
+}
+
+.role.active{
+    background:#315bea;
+    color:white;
+}
+
+.icon{
+    font-size:35px;
+    display:block;
+    margin-bottom:10px;
+}
+
+.dashboard{
+    background:white;
+    border-radius:22px;
+    padding:25px;
+    box-shadow:0 5px 25px rgba(0,0,0,.08);
+}
+
+.dashboard h2{
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin:20px 0;
+}
+
+.card{
+    border-radius:18px;
+    padding:20px;
+    background:#f5f7ff;
+}
+
+.card strong{
+    display:block;
+    font-size:28px;
+    margin-top:8px;
+}
+
+.section{
+    margin-top:25px;
+    padding:20px;
+    background:#f8f9fc;
+    border-radius:18px;
+}
+
+button.main{
+    background:#315bea;
+    color:white;
+    border:0;
+    padding:12px 20px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+input,textarea,select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    margin:8px 0;
+    font-family:inherit;
+}
+
+@media(max-width:700px){
+    .roles{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:430px){
+    header h1{
+        font-size:22px;
+    }
+
+    .container{
+        padding:12px;
+    }
+
+    .dashboard{
+        padding:16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🎓 مدرسه‌یار هوشمند</h1>
+    <p>سامانه مدیریت و ارتباط هوشمند مدرسه</p>
+</header>
+
+<div class="container">
+
+    <div class="roles">
+
+        <button class="role active" onclick="changeRole('manager',this)">
+            <span class="icon">👨‍💼</span>
+            مدیر
+        </button>
+
+        <button class="role" onclick="changeRole('teacher',this)">
+            <span class="icon">👩‍🏫</span>
+            معلم / هنرآموز
+        </button>
+
+        <button class="role" onclick="changeRole('parent',this)">
+            <span class="icon">👨‍👩‍👧</span>
+            والد
+        </button>
+
+        <button class="role" onclick="changeRole('student',this)">
+            <span class="icon">👨‍🎓</span>
+            دانش‌آموز
+        </button>
+
+    </div>
+
+    <div class="dashboard">
+
+        <h2 id="title">داشبورد مدیر</h2>
+
+        <div class="stats">
+
+            <div class="card">
+                👨‍🎓 دانش‌آموزان
+                <strong id="students">320</strong>
+            </div>
+
+            <div class="card">
+                🟢 حاضر امروز
+                <strong id="present">287</strong>
+            </div>
+
+            <div class="card">
+                🔴 غایب امروز
+                <strong id="absent">33</strong>
+            </div>
+
+            <div class="card">
+                📈 پیشرفت
+                <strong id="progress">74%</strong>
+            </div>
+
+        </div>
+
+        <div class="section">
+
+            <h3>📢 اطلاعیه‌ها</h3>
+
+            <p>
+                هنوز اطلاعیه‌ای ثبت نشده است.
+            </p>
+
+            <button class="main" onclick="newAnnouncement()">
+                + درج اطلاعیه
+            </button>
+
+        </div>
+
+        <div class="section">
+
+            <h3>💬 پیام‌ها</h3>
+
+            <p>
+                سامانه پیام‌رسان مدرسه‌یار آماده است.
+            </p>
+
+            <button class="main" onclick="sendMessage()">
+                ارسال پیام
+            </button>
+
+        </div>
+
+        <div class="section">
+
+            <h3>🎬 آموزش و تمرین</h3>
+
+            <p>
+                امکان انتشار کلیپ آموزشی و دریافت تمرین دانش‌آموزان در این بخش قرار می‌گیرد.
+            </p>
+
+            <button class="main" onclick="showEducation()">
+                ورود به بخش آموزش
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let currentRole = "manager";
+
+const data = {
+
+    manager:{
+        title:"داشبورد مدیر",
+        students:"320",
+        present:"287",
+        absent:"33",
+        progress:"74%"
+    },
+
+    teacher:{
+        title:"داشبورد معلم / هنرآموز",
+        students:"32",
+        present:"28",
+        absent:"4",
+        progress:"81%"
+    },
+
+    parent:{
+        title:"داشبورد والد",
+        students:"1",
+        present:"1",
+        absent:"0",
+        progress:"86%"
+    },
+
+    student:{
+        title:"داشبورد دانش‌آموز",
+        students:"1",
+        present:"1",
+        absent:"0",
+        progress:"86%"
+    }
+
+};
+
+function changeRole(role,element){
+
+    currentRole=role;
+
+    document.querySelectorAll(".role")
+        .forEach(x=>x.classList.remove("active"));
+
+    element.classList.add("active");
+
+    const d=data[role];
+
+    document.getElementById("title").innerText=d.title;
+    document.getElementById("students").innerText=d.students;
+    document.getElementById("present").innerText=d.present;
+    document.getElementById("absent").innerText=d.absent;
+    document.getElementById("progress").innerText=d.progress;
+}
+
+function newAnnouncement(){
+
+    const text=prompt("متن اطلاعیه را وارد کنید:");
+
+    if(text){
+        alert("اطلاعیه با موفقیت ثبت شد:\n\n"+text);
+    }
+}
+
+function sendMessage(){
+
+    const text=prompt("متن پیام را وارد کنید:");
+
+    if(text){
+        alert("پیام آماده ارسال است:\n\n"+text);
+    }
+}
+
+function showEducation(){
+
+    alert(
+        "🎬 بخش آموزش\n\n"+
+        "در نسخه بعدی:\n"+
+        "• بارگذاری کلیپ آموزشی\n"+
+        "• مشاهده ویدئو\n"+
+        "• ارسال تمرین\n"+
+        "• دریافت تمرین دانش‌آموز\n"+
+        "• بررسی و نمره‌دهی تمرین"
+    );
+}
+
+</script>
+
+</body>
+</html>
